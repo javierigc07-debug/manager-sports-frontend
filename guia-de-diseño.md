@@ -1,6 +1,4 @@
 
----
-
 ## 1. Paleta de Colores
 
 ### Colores principales
