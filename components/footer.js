@@ -12,17 +12,7 @@ export default {
             </span>
           </div>
 
-          <div class="flex gap-8">
-            <a
-              v-for="item in ['Privacidad', 'Términos', 'Soporte']"
-              :key="item"
-              href="#"
-              class="text-slate-400 hover:text-white text-sm transition-colors"
-              style="font-weight: 500"
-            >
-              {{ item }}
-            </a>
-          </div>
+
 
           <p class="text-slate-500 text-xs" style="font-weight: 500">
             © 2026 Olympia. Todos los derechos reservados.

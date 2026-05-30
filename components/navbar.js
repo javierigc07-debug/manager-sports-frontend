@@ -13,12 +13,11 @@ export default {
 
         <!-- Desktop Nav -->
         <nav class="hidden min-[1200px]:flex items-center gap-8">
-          <!-- Ahora navItems existe en data(), por lo que esto funcionará -->
-          <a v-for="item in navItems" :key="item" href="#" 
+          <button v-for="item in navItems" :key="item.id" @click="scrollTo(item.id)"
              class="text-slate-400 hover:text-white transition-colors duration-200 text-sm" 
              style="font-weight: 500">
-            {{ item }}
-          </a>
+            {{ item.name }}
+          </button>
         </nav>
 
         <div class="hidden min-[1200px]:flex items-center gap-3">
@@ -41,9 +40,9 @@ export default {
 
       <!-- Mobile Menu -->
       <div v-if="menuOpen" class="min-[1200px]:hidden border-t border-slate-800 px-6 py-6 flex flex-col gap-4">
-        <a v-for="item in navItems" :key="item" href="#" class="text-slate-400 hover:text-white transition-colors text-sm" style="font-weight: 500">
-          {{ item }}
-        </a>
+        <button v-for="item in navItems" :key="item.id" @click="scrollTo(item.id); menuOpen = false" class="text-slate-400 hover:text-white transition-colors text-sm text-left" style="font-weight: 500">
+          {{ item.name }}
+        </button>
         <div class="pt-2 flex flex-col gap-3">
           <router-link to="/login" class="text-slate-400 text-sm text-center" style="font-weight: 500" @click="menuOpen = false">
             Iniciar sesión
@@ -60,12 +59,31 @@ export default {
   data() {
     return {
       menuOpen: false,
-      navItems: ["¿Quiénes somos?", "¿Cómo funciona?", "Eventos", "Rankings y Estadísticas", "Contáctanos"]
+      navItems: [
+        { name: "¿Quiénes somos?", id: "about" },
+        { name: "¿Cómo funciona?", id: "how-it-works" },
+        { name: "Eventos", id: "events" },
+        { name: "Rankings y Estadísticas", id: "rankings" }
+      ]
     };
   },
   methods: {
     toggleMenu() {
       this.menuOpen = !this.menuOpen;
+    },
+    scrollTo(id) {
+      const isHome = this.$route && (this.$route.path === '/' || this.$route.path === '');
+      if (!isHome) {
+        this.$router.push('/').then(() => {
+          setTimeout(() => {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 500);
+        });
+      } else {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }
 };
